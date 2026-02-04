@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Darshan N | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg:#0f172a;
+      --card:#1e293b;
+      --text:white;
+      --accent:#60a5fa;
+    }
+    body {
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      text-align:center;
+    }
+    header {
+      padding:40px 20px;
+      background:linear-gradient(45deg,#2563eb,#1e3a8a);
+    }
+    section {
+      background:var(--card);
+      margin:25px 20px;
+      padding:20px;
+      border-radius:12px;
+    }
+    h2 { color:var(--accent); }
+
+    /* FLIP INTRO */
+    .flip-container { width:150px;height:150px;margin:20px auto;perspective:1000px; }
+    .flipper { width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 1s; }
+    .flip-container.flip .flipper { transform:rotateY(180deg); }
+    .front,.back {
+      position:absolute;width:100%;height:100%;border-radius:50%;
+      backface-visibility:hidden;overflow:hidden;
+      border:4px solid white;box-shadow:0 0 20px var(--accent);
+      display:flex;justify-content:center;align-items:center;
+    }
+    .front { background:#1e293b; }
+    .front img { width:100%;height:100%;object-fit:cover; }
+    .hello-text { position:absolute;bottom:10px;background:rgba(0,0,0,0.5);padding:4px 8px;border-radius:10px;font-size:14px; }
+    .back { transform:rotateY(180deg); }
+    .back img { width:100%;height:100%;object-fit:cover; }
+
+    .skills span { background:var(--accent);padding:6px 12px;margin:5px;border-radius:6px;display:inline-block; }
+    button { padding:8px 14px;border-radius:6px;border:none;background:var(--accent);cursor:pointer;margin:5px; }
+
+    #calculatorSection,#todoSection { display:none; }
+    input { padding:8px;border-radius:6px;border:none;margin:5px; }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Darshan N</h1>
+  <p>BSc Computer Science Student | Web Developer</p>
+
+  <div class="flip-container" id="flipCard">
+    <div class="flipper">
+      <div class="front">
+        <img src="https://media.giphy.com/media/v6aOjy0Qo1fIA/giphy.gif">
+        <div class="hello-text">Hello Buddy 👋</div>
+      </div>
+      <div class="back">
+        <img src="https://files.catbox.moe/hagmkr.jpg">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <h2>About Me</h2>
+  <p>I am a Computer Science student passionate about web development and building modern websites.</p>
+</section>
+
+<section>
+  <h2>Skills</h2>
+  <span>HTML</span> | <span>CSS</span> | <span>JavaScript</span>
+</section>
+
+<section>
+  <h2>Projects</h2>
+  <button onclick="showCalculator()">Calculator App</button>
+  <button onclick="showTodo()">To-Do App</button>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calculatorSection">
+  <h2>Calculator</h2>
+  <input type="text" id="display" disabled style="width:80%;text-align:right;"><br>
+  <button onclick="append('7')">7</button>
+  <button onclick="append('8')">8</button>
+  <button onclick="append('9')">9</button>
+  <button onclick="append('+')">+</button><br>
+  <button onclick="append('4')">4</button>
+  <button onclick="append('5')">5</button>
+  <button onclick="append('6')">6</button>
+  <button onclick="append('-')">-</button><br>
+  <button onclick="append('1')">1</button>
+  <button onclick="append('2')">2</button>
+  <button onclick="append('3')">3</button>
+  <button onclick="append('*')">*</button><br>
+  <button onclick="append('0')">0</button>
+  <button onclick="clearDisplay()">C</button>
+  <button onclick="eraseOne()">⌫</button>
+  <button onclick="calculate()">=</button>
+</section>
+
+<!-- TODO -->
+<section id="todoSection">
+  <h2>To-Do App</h2>
+  <input type="text" id="taskInput" placeholder="Enter task">
+  <button onclick="addTask()">Add</button>
+  <ul id="taskList"></ul>
+</section>
+
+<section>
+  <h2>Contact</h2>
+  <p>Email: darshan.csdev@gmail.com</p>
+</section>
+
+<script>
+setTimeout(()=>{document.getElementById("flipCard").classList.add("flip");},3000);
+
+function showCalculator(){
+  document.getElementById("calculatorSection").style.display="block";
+  document.getElementById("todoSection").style.display="none";
+}
+function showTodo(){
+  document.getElementById("todoSection").style.display="block";
+  document.getElementById("calculatorSection").style.display="none";
+}
+
+function append(v){ document.getElementById("display").value += v; }
+function clearDisplay(){ document.getElementById("display").value=""; }
+function eraseOne(){
+  let d=document.getElementById("display").value;
+  document.getElementById("display").value=d.slice(0,-1);
+}
+function calculate(){
+  try{document.getElementById("display").value=eval(document.getElementById("display").value);}
+  catch{document.getElementById("display").value="Error";}
+}
+
+function addTask(){
+  let input=document.getElementById("taskInput");
+  if(input.value.trim()=="") return;
+  let li=document.createElement("li");
+  li.textContent=input.value;
+  li.onclick=()=>li.style.textDecoration="line-through";
+  document.getElementById("taskList").appendChild(li);
+  input.value="";
+}
+</script>
+
+</body>
+</html>
